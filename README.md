@@ -1,6 +1,17 @@
 # shop_smart
 
-A new Flutter project.
+A comprehensive E-Commerce app presenting various products to users. Utilizing Firebase for functionality such as ordering, user login, order history, account creation, and personalized category preferences. Work in progress with many screens and actions for users.
+
+Key Learnings:
+
+UI and Widget Mastery: Significantly improved skills in designing user interfaces and utilizing widgets effectively.
+Firebase Integration: Gained hands-on experience with Firebase for various functionalities, including order management and user authentication.
+Provider Implementation: Planned usage of the Provider package for state management in the ongoing development of the app.
+
+
+
+
+
 
 ## Getting Started
 
