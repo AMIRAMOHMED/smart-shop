@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_smart/provider/them_provider.dart';
 import 'package:shop_smart/root.dart';
+import 'package:shop_smart/screens/auth/login_screen.dart';
 import 'package:shop_smart/screens/inner_screens/product_details_screen.dart';
 import 'package:shop_smart/screens/inner_screens/viewd_recently.dart';
 import 'package:shop_smart/screens/inner_screens/wishlist_screen.dart';
@@ -29,11 +30,13 @@ class MyApp extends StatelessWidget {
               isDarkTheme: themeProvider.getIsDarkTheme, context: context),
           debugShowCheckedModeBanner: false,
           title: "ShopSmart",
-          home: const RootScreen(),
+          // home: const RootScreen(),
+          home:const LoginScreen(),
           routes: {
             ProductDetails.id: (context) => const ProductDetails(),
             WishListScreen.id: (context) => const WishListScreen(),
-            ViewedRecentlyPage.id: (context) => const ViewedRecentlyPage()
+            ViewedRecentlyPage.id: (context) => const ViewedRecentlyPage(),
+            LoginScreen.id: (context) => const LoginScreen(),
           },
         );
       }),

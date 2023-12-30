@@ -3,11 +3,13 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_smart/screens/inner_screens/wishlist_screen.dart';
 import 'package:shop_smart/services/assest_manger.dart';
+import 'package:shop_smart/services/my_app_methods.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
 
 import '../provider/them_provider.dart';
 import '../widgets/app_name_text.dart';
+import 'auth/login_screen.dart';
 import 'inner_screens/viewd_recently.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -142,7 +144,13 @@ class ProfileScreen extends StatelessWidget {
                                 20.0), // adjust the value as needed
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          await MyAppMethods.showErrorOrWarningDialog(
+                              subTitle: "Are You Sure?",
+                              fct: () {},
+                              context: context,
+                              isError: false);
+                        },
                         icon: const Icon(
                           IconlyLight.login,
                         ),
