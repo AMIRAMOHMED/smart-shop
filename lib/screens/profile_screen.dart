@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:shop_smart/screens/inner_screens/order_screen/order_screen.dart';
 import 'package:shop_smart/screens/inner_screens/wishlist_screen.dart';
 import 'package:shop_smart/services/assest_manger.dart';
-import 'package:shop_smart/services/my_app_methods.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
 
@@ -179,7 +178,7 @@ class CustomListTile extends StatelessWidget {
       required this.function,
       required this.imagePath});
 
-  final imagePath, text;
+  final String imagePath, text;
   final Function function;
 
   @override

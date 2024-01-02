@@ -5,7 +5,6 @@ import 'package:shop_smart/root.dart';
 import 'package:shop_smart/screens/auth/forgot_password_screen.dart';
 import 'package:shop_smart/screens/auth/login_screen.dart';
 import 'package:shop_smart/screens/auth/register_screen.dart';
-import 'package:shop_smart/screens/home_screen.dart';
 import 'package:shop_smart/screens/inner_screens/order_screen/order_screen.dart';
 import 'package:shop_smart/screens/inner_screens/product_details_screen.dart';
 import 'package:shop_smart/screens/inner_screens/viewd_recently.dart';

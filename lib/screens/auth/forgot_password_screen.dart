@@ -17,7 +17,6 @@ class ForgetPassswordScreen extends StatefulWidget {
 }
 
 class _ForgetPassswordScreenState extends State<ForgetPassswordScreen> {
-  @override
   late final TextEditingController _emailController;
   late final _formKey = GlobalKey<FormState>();
 
@@ -41,6 +40,7 @@ class _ForgetPassswordScreenState extends State<ForgetPassswordScreen> {
     if (isValid) {}
   }
 
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(

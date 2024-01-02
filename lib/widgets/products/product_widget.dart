@@ -8,8 +8,8 @@ import '../../screens/inner_screens/product_details_screen.dart';
 import 'heart_button.dart';
 
 class ProductWidget extends StatefulWidget {
-  const ProductWidget({super.key});
-
+  const ProductWidget({super.key,  this.image,  this.price,  this.title});
+final String? image,price ,title;
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
 }
@@ -30,7 +30,7 @@ class _ProductWidgetState extends State<ProductWidget> {
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: FancyShimmerImage(
-              imageUrl: AppConstants.productImageUrl,
+              imageUrl: widget.image?? AppConstants.productImageUrl,
               width: double.infinity,
               height: size.height * .22,
             ),
@@ -40,7 +40,7 @@ class _ProductWidgetState extends State<ProductWidget> {
               Flexible(
                 flex: 5,
                 child: TitlesTextWidget(
-                  label: "Title" * 10,
+                  label: widget.title??"NameProduct",
                   fontSize: 20,
                   maxLine: 2,
                 ),
@@ -53,33 +53,35 @@ class _ProductWidgetState extends State<ProductWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Flexible(
+               Flexible(
                 flex: 5,
                 child: SubtitleTextWidget(
-                  label: "jdbs\$",
+                  label: "${widget.price}\$" ??"166.\$",
                   fontSize: 20,
                 ),
               ),
               Flexible(
                 child: Material(
                   borderRadius: BorderRadius.circular(16.0),
-                  color: Colors.lightBlue,
+                  color: Colors.black12,
                   child: InkWell(
                     splashColor: Colors.red,
                     onTap: () {},
                     child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(Ionicons.cart_sharp),
+                      padding: EdgeInsets.all(5),
+                      child: Icon(Ionicons.cart),
                     ),
                   ),
                 ),
-              )
+              ), const SizedBox(
+                width:5,
+
+              ),
             ],
           ),
-          const SizedBox(
-            height: 10,
-          ),
+
         ],
+
       ),
     );
   }

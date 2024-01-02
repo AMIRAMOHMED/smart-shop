@@ -1,16 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:shop_smart/widgets/title_text_.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
+import 'package:flutter/material.dart';
+import 'package:shop_smart/models/product_model.dart';
+import 'package:shop_smart/widgets/title_text_.dart';
+
 import '../services/assest_manger.dart';
 import '../widgets/products/product_widget.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
+
   static TextEditingController searchTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
     return InkWell(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -19,7 +21,6 @@ class SearchScreen extends StatelessWidget {
         appBar: AppBar(
           title: const TitlesTextWidget(label: "Search ", fontSize: 25),
           leading: Image.asset(AssetsManager.shoppingCart),
-
         ),
         body: Padding(
           padding: const EdgeInsets.all(25.0),
@@ -43,10 +44,14 @@ class SearchScreen extends StatelessWidget {
               ),
               Expanded(
                 child: DynamicHeightGridView(
-                    itemCount: 120,
+                    itemCount: ProductModel.localProds.length,
                     crossAxisCount: 2,
                     builder: (context, index) {
-                      return const ProductWidget();
+                      return ProductWidget(
+                        image: ProductModel.localProds[index].productImage,
+                        price: ProductModel.localProds[index].productPrice,
+                        title: ProductModel.localProds[index].productTitle,
+                      );
                     }),
               ),
             ],
