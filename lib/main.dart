@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_smart/provider/them_provider.dart';
 import 'package:shop_smart/root.dart';
+import 'package:shop_smart/screens/auth/forgot_password_screen.dart';
 import 'package:shop_smart/screens/auth/login_screen.dart';
+import 'package:shop_smart/screens/auth/register_screen.dart';
+import 'package:shop_smart/screens/home_screen.dart';
+import 'package:shop_smart/screens/inner_screens/order_screen/order_screen.dart';
 import 'package:shop_smart/screens/inner_screens/product_details_screen.dart';
 import 'package:shop_smart/screens/inner_screens/viewd_recently.dart';
 import 'package:shop_smart/screens/inner_screens/wishlist_screen.dart';
@@ -31,12 +35,16 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: "ShopSmart",
           // home: const RootScreen(),
-          home:const LoginScreen(),
+          home: const RootScreen(),
           routes: {
             ProductDetails.id: (context) => const ProductDetails(),
             WishListScreen.id: (context) => const WishListScreen(),
             ViewedRecentlyPage.id: (context) => const ViewedRecentlyPage(),
             LoginScreen.id: (context) => const LoginScreen(),
+            RegisterScreen.id: (context) => const RegisterScreen(),
+            ForgetPassswordScreen.id: (context) =>
+                const ForgetPassswordScreen(),
+            OrderScreen.id: (context) => const OrderScreen()
           },
         );
       }),

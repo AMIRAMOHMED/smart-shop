@@ -1,5 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
 import '../../consts/app_constants.dart';
@@ -68,7 +69,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     onTap: () {},
                     child: const Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Icon(Icons.shopping_cart_outlined),
+                      child: Icon(Ionicons.cart_sharp),
                     ),
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_smart/screens/inner_screens/order_screen/order_screen.dart';
 import 'package:shop_smart/screens/inner_screens/wishlist_screen.dart';
 import 'package:shop_smart/services/assest_manger.dart';
 import 'package:shop_smart/services/my_app_methods.dart';
@@ -73,7 +74,9 @@ class ProfileScreen extends StatelessWidget {
                   const TitlesTextWidget(label: "General", fontSize: 20),
                   CustomListTile(
                     text: "All orders ",
-                    function: () {},
+                    function: () async {
+                      await Navigator.pushNamed(context, OrderScreen.id);
+                    },
                     imagePath: AssetsManager.orderSvg,
                   ),
                   CustomListTile(
@@ -145,11 +148,16 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () async {
-                          await MyAppMethods.showErrorOrWarningDialog(
-                              subTitle: "Are You Sure?",
-                              fct: () {},
-                              context: context,
-                              isError: false);
+                          Navigator.pushNamed(
+                            context,
+                            LoginScreen.id,
+                          );
+
+                          // await MyAppMethods.showErrorOrWarningDialog(
+                          //     subTitle: "Are You Sure?",
+                          //     fct: () {},
+                          //     context: context,
+                          //     isError: false);
                         },
                         icon: const Icon(
                           IconlyLight.login,

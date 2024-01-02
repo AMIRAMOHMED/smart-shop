@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:shop_smart/screens/auth/register_screen.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
 
 import '../../consts/my_validators.dart';
 import '../../widgets/app_name_text.dart';
+import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -128,7 +130,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         Align(
                           alignment: Alignment.topRight,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, ForgetPassswordScreen.id);
+                            },
                             child: const SubtitleTextWidget(
                               label: "Forgot Password?",
                               fontSize: 22,
@@ -214,7 +219,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SubtitleTextWidget(
                                 label: "Don`t have an account?", fontSize: 18),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, RegisterScreen.id);
+                                },
                                 child: const SubtitleTextWidget(
                                   label: "Sign Up",
                                   fontSize: 18,

@@ -1,5 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 
 import '../../consts/app_constants.dart';
@@ -56,7 +57,7 @@ class LatestArrivelProductsWidget extends StatelessWidget {
                           IconButton(
                             onPressed: () {},
                             icon: const Icon(
-                              Icons.shopping_cart_outlined,
+                              Ionicons.cart_sharp,
                               size: 18,
                             ),
                           ),

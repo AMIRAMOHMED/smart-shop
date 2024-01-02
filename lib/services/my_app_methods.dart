@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
+import 'package:shop_smart/widgets/title_text_.dart';
+
 import '../widgets/subtitle_text.dart';
 import 'assest_manger.dart';
 
@@ -59,5 +62,58 @@ class MyAppMethods {
           );
         },
         context: context);
+  }
+
+  static Future<void> imagePickerDialog({
+    required BuildContext context,
+    required Function galleryFct,
+    required Function removeFct,
+    required Function cameraFct,
+  }) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Center(
+              child: TitlesTextWidget(
+                label: "Choose Option",
+                fontSize: 20,
+              ),
+            ),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: [
+                  TextButton.icon(
+                      onPressed: () {
+                        cameraFct();
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        }
+                      },
+                      icon: const Icon(IconlyLight.camera),
+                      label: const Text("Camera")),
+                  TextButton.icon(
+                      onPressed: () {
+                        galleryFct();
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        }
+                      },
+                      icon: const Icon(IconlyLight.image),
+                      label: const Text("Gallery")),
+                  TextButton.icon(
+                      onPressed: () {
+                        removeFct();
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        }
+                      },
+                      icon: const Icon(IconlyLight.delete),
+                      label: const Text("Remove"))
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
