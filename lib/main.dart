@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_smart/provider/product_provider.dart';
 import 'package:shop_smart/provider/them_provider.dart';
 import 'package:shop_smart/root.dart';
 import 'package:shop_smart/screens/auth/forgot_password_screen.dart';
@@ -9,6 +10,7 @@ import 'package:shop_smart/screens/inner_screens/order_screen/order_screen.dart'
 import 'package:shop_smart/screens/inner_screens/product_details_screen.dart';
 import 'package:shop_smart/screens/inner_screens/viewd_recently.dart';
 import 'package:shop_smart/screens/inner_screens/wishlist_screen.dart';
+import 'package:shop_smart/screens/search_screen.dart';
 
 import 'consts/them_data.dart';
 
@@ -23,9 +25,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) {
-          return ThemeProvider();
-        })
+        ChangeNotifierProvider(
+          create: (_) => ThemeProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProductProvider(),
+        )
       ],
       child: Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
         return MaterialApp(
@@ -43,7 +48,9 @@ class MyApp extends StatelessWidget {
             RegisterScreen.id: (context) => const RegisterScreen(),
             ForgetPassswordScreen.id: (context) =>
                 const ForgetPassswordScreen(),
-            OrderScreen.id: (context) => const OrderScreen()
+            OrderScreen.id: (context) => const OrderScreen(),
+            SearchScreen.id: (context) =>
+            const SearchScreen(),
           },
         );
       }),

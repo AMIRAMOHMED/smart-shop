@@ -36,7 +36,7 @@ class WishListScreen extends StatelessWidget {
                 itemCount: 120,
                 crossAxisCount: 2,
                 builder: (context, index) {
-                  return const ProductWidget();
+                  return  const ProductWidget(productId: '',);
                 }),
           );
   }

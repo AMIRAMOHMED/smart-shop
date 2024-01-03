@@ -1,15 +1,17 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
-import '../../consts/app_constants.dart';
+import '../../provider/product_provider.dart';
 import '../../screens/inner_screens/product_details_screen.dart';
 import 'heart_button.dart';
 
 class ProductWidget extends StatefulWidget {
-  const ProductWidget({super.key,  this.image,  this.price,  this.title});
-final String? image,price ,title;
+  const ProductWidget({super.key,  required this.productId});
+
+final String productId;
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
 }
@@ -17,12 +19,16 @@ final String? image,price ,title;
 class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
+    final productProvider=Provider.of<ProductProvider>(context);
+    final getCurrProduct=productProvider.findByProductID(widget.productId);
     Size size = MediaQuery.of(context).size;
-    return GestureDetector(
+    return getCurrProduct == null?const SizedBox.shrink():
+
+      GestureDetector(
       onTap: () async {
         await Navigator.pushNamed(
           context,
-          ProductDetails.id,
+          ProductDetails.id,arguments: getCurrProduct.productId,
         );
       },
       child: Column(
@@ -30,7 +36,7 @@ class _ProductWidgetState extends State<ProductWidget> {
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: FancyShimmerImage(
-              imageUrl: widget.image?? AppConstants.productImageUrl,
+              imageUrl: getCurrProduct.productImage,
               width: double.infinity,
               height: size.height * .22,
             ),
@@ -40,7 +46,7 @@ class _ProductWidgetState extends State<ProductWidget> {
               Flexible(
                 flex: 5,
                 child: TitlesTextWidget(
-                  label: widget.title??"NameProduct",
+                  label: getCurrProduct.productTitle,
                   fontSize: 20,
                   maxLine: 2,
                 ),
@@ -56,7 +62,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                Flexible(
                 flex: 5,
                 child: SubtitleTextWidget(
-                  label: "${widget.price}\$" ??"166.\$",
+                  label: "${ getCurrProduct.productPrice}\$" ,
                   fontSize: 20,
                 ),
               ),
