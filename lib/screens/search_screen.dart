@@ -10,6 +10,7 @@ import '../widgets/products/product_widget.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
   static const id = "SearchScreen";
 
   @override
@@ -18,6 +19,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   late TextEditingController searchTextController;
+
   @override
   void initState() {
     searchTextController = TextEditingController();
@@ -59,16 +61,11 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: Column(
                     children: [
                       TextField(
-                        onSubmitted: (value) {
-                          setState(() {
-                            productListSearch = productProvider.searchQuery(
-                                searchText: searchTextController.text);
-                          });
-                        },
                         onChanged: (value) {
                           setState(() {
                             productListSearch = productProvider.searchQuery(
-                                searchText: searchTextController.text);
+                                searchText: searchTextController.text,
+                                passedList: productList);
                           });
                         },
                         controller: searchTextController,
@@ -86,19 +83,26 @@ class _SearchScreenState extends State<SearchScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      if(searchTextController.text.isNotEmpty&&productListSearch.isNotEmpty);
+                      if (searchTextController.text.isNotEmpty &&
+                          productListSearch.isEmpty) ...[
+                        const Center(
+                            child: TitlesTextWidget(
+                                label: "No result found", fontSize: 40))
+                      ],
                       Expanded(
                         child: DynamicHeightGridView(
-                            itemCount: productList.length,
-                            crossAxisCount: 2,
-                            builder: (context, index) {
-                              return ChangeNotifierProvider.value(
-                                value: productList[index],
-                                child: ProductWidget(
-                                  productId: productList[index].productId,
-                                ),
-                              );
-                            }),
+                          itemCount: searchTextController.text.isNotEmpty
+                              ? productListSearch.length
+                              : productList.length,
+                          builder: ((context, index) {
+                            return ProductWidget(
+                              productId: searchTextController.text.isNotEmpty
+                                  ? productListSearch[index].productId
+                                  : productList[index].productId,
+                            );
+                          }),
+                          crossAxisCount: 2,
+                        ),
                       ),
                     ],
                   ),

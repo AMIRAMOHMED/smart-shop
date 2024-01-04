@@ -1,10 +1,12 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
 
-import '../consts/app_constants.dart';
+import '../models/cart_model.dart';
+import '../provider/product_provider.dart';
 import 'bottom_sheet.dart';
 import 'products/heart_button.dart';
 
@@ -14,8 +16,12 @@ class CartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final productProvider = Provider.of<ProductProvider>(context);
+    final cartModelProvider = Provider.of<CartModel>(context);
+    final getCurrProduct =
+        productProvider.findByProductID(cartModelProvider.productId);
 
-    return FittedBox(
+    return getCurrProduct==null?const SizedBox.shrink() :FittedBox(
       child: IntrinsicWidth(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -24,7 +30,7 @@ class CartWidget extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: FancyShimmerImage(
-                  imageUrl: AppConstants.productImageUrl,
+                  imageUrl: getCurrProduct.productImage,
                   height: size.height * 0.2,
                   width: size.height * 0.2,
                 ),
@@ -40,7 +46,7 @@ class CartWidget extends StatelessWidget {
                         SizedBox(
                           width: size.width * 0.6,
                           child: TitlesTextWidget(
-                            label: "Title" * 5,
+                            label: getCurrProduct.productTitle,
                             fontSize: 20,
                           ),
                         ),
@@ -53,7 +59,7 @@ class CartWidget extends StatelessWidget {
                                 color: Colors.red,
                               ),
                             ),
-                           const  HeartButtonWidget(),
+                            const HeartButtonWidget(),
                           ],
                         ),
                       ],
@@ -61,8 +67,8 @@ class CartWidget extends StatelessWidget {
                     Row(
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const SubtitleTextWidget(
-                          label: "16\$",
+                         SubtitleTextWidget(
+                          label: "${getCurrProduct.productPrice}\$",
                           fontSize: 20,
                           color: Colors.blue,
                         ),
@@ -93,9 +99,9 @@ class CartWidget extends StatelessWidget {
                             IconlyLight.arrow_down_2,
                             color: Colors.blue,
                           ),
-                          label: const Text(
-                            "Qty: 6 ",
-                            style: TextStyle(color: Colors.blue),
+                          label:  Text(
+                            "${cartModelProvider.quantity}",
+                            style:const TextStyle(color: Colors.blue),
                           ),
                         ),
                       ],

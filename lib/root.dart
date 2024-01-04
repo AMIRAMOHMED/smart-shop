@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_smart/provider/cart_provider.dart';
 import 'package:shop_smart/screens/cart_screen.dart';
 import 'package:shop_smart/screens/home_screen.dart';
 import 'package:shop_smart/screens/profile_screen.dart';
@@ -33,8 +35,11 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+
     return Scaffold(
-      body: PageView(physics: const NeverScrollableScrollPhysics(),
+      body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: controller,
         children: screens,
       ),
@@ -48,25 +53,25 @@ class _RootScreenState extends State<RootScreen> {
           });
           controller!.jumpToPage(currentScreen);
         },
-        destinations: const [
-          NavigationDestination(
+        destinations: [
+          const NavigationDestination(
               selectedIcon: Icon(IconlyBold.home),
               icon: Icon(IconlyBold.home),
               label: "home"),
-          NavigationDestination(
+          const NavigationDestination(
               selectedIcon: Icon(IconlyBold.search),
               icon: Icon(IconlyBold.search),
               label: "search"),
           NavigationDestination(
-              selectedIcon: Icon(IconlyBold.bag_2),
+              selectedIcon: const Icon(IconlyBold.bag_2),
               icon: Badge(
                   backgroundColor: Colors.blue,
-                  label: Text("6"),
-                  child: Icon(
+                  label: Text('${cartProvider.getCartItems.length}'),
+                  child: const Icon(
                     IconlyBold.bag_2,
                   )),
               label: "cart"),
-          NavigationDestination(
+          const NavigationDestination(
               selectedIcon: Icon(IconlyBold.profile),
               icon: Icon(IconlyBold.profile),
               label: "profile")

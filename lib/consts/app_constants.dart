@@ -1,6 +1,6 @@
 import 'package:shop_smart/services/assest_manger.dart';
 
-import '../models/categories-model.dart';
+import '../models/categories_model.dart';
 
 class AppConstants {
   static const String productImageUrl =
