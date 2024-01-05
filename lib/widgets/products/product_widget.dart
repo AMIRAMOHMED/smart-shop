@@ -7,6 +7,7 @@ import 'package:shop_smart/widgets/title_text_.dart';
 
 import '../../provider/cart_provider.dart';
 import '../../provider/product_provider.dart';
+import '../../provider/viewed_provider.dart';
 import '../../screens/inner_screens/product_details_screen.dart';
 import 'heart_button.dart';
 
@@ -22,6 +23,8 @@ class ProductWidget extends StatefulWidget {
 class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
+    final viewedProvider = Provider.of<ViewedProductProvider>(context);
+
     final productProvider = Provider.of<ProductProvider>(context);
     final getCurrProduct = productProvider.findByProductID(widget.productId);
     final cartProvider = Provider.of<CartProvider>(context);
@@ -30,6 +33,9 @@ class _ProductWidgetState extends State<ProductWidget> {
         ? const SizedBox.shrink()
         : GestureDetector(
             onTap: () async {
+              viewedProvider.addViewedProduct(
+                  productId: getCurrProduct.productId);
+
               await Navigator.pushNamed(
                 context,
                 ProductDetails.id,
@@ -56,8 +62,11 @@ class _ProductWidgetState extends State<ProductWidget> {
                         maxLine: 2,
                       ),
                     ),
-                      Flexible(
-                      child: HeartButtonWidget(size: 25,productId: getCurrProduct.productId,),
+                    Flexible(
+                      child: HeartButtonWidget(
+                        size: 25,
+                        productId: getCurrProduct.productId,
+                      ),
                     )
                   ],
                 ),

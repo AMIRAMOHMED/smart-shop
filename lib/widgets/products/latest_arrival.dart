@@ -7,6 +7,7 @@ import 'package:shop_smart/widgets/subtitle_text.dart';
 
 
 
+import '../../provider/viewed_provider.dart';
 import '../../screens/inner_screens/product_details_screen.dart';
 import 'heart_button.dart';
 
@@ -16,11 +17,19 @@ class LatestArrivelProductsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsModel=Provider.of<ProductModel>(context);
+    final viewedProvider=Provider.of<ViewedProductProvider>(context);
+
     Size size = MediaQuery.of(context).size;
 
     return GestureDetector(
       onTap: () async {
-        await Navigator.pushNamed(context, ProductDetails.id);
+        viewedProvider.addViewedProduct(productId: productsModel.productId);
+        await Navigator.pushNamed(
+          context,
+          ProductDetails.id,
+          arguments: productsModel.productId,
+        );
+
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

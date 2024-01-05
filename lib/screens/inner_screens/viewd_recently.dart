@@ -1,6 +1,8 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../provider/viewed_provider.dart';
 import '../../services/assest_manger.dart';
 
 import '../../widgets/empty_bag.dart';
@@ -10,10 +12,12 @@ import '../../widgets/title_text_.dart';
 class ViewedRecentlyPage extends StatelessWidget {
   const ViewedRecentlyPage({super.key});
   static const id = "ViewedRecentlyPage";
-  final bool isEmpty = true;
+
   @override
   Widget build(BuildContext context) {
-    return isEmpty
+    final viewedProvider = Provider.of<ViewedProductProvider>(context);
+
+    return viewedProvider.getviewedProdItems.isEmpty
         ? Scaffold(
             body: EmptyBag(
             imagePath: AssetsManager.recent,
@@ -24,8 +28,8 @@ class ViewedRecentlyPage extends StatelessWidget {
           ))
         : Scaffold(
             appBar: AppBar(
-              title: const TitlesTextWidget(
-                  label: "Viewed Recentt(5)", fontSize: 20),
+              title:  TitlesTextWidget(
+                  label: "Viewed Recentt(${viewedProvider.getviewedProdItems.length})", fontSize: 20),
               leading: Image.asset(AssetsManager.recent),
               actions: const [
                 Icon(
@@ -34,10 +38,10 @@ class ViewedRecentlyPage extends StatelessWidget {
               ],
             ),
             body: DynamicHeightGridView(
-                itemCount: 120,
+                itemCount: viewedProvider.getviewedProdItems.length,
                 crossAxisCount: 2,
                 builder: (context, index) {
-                  return  const ProductWidget(productId: '',);
+                  return   ProductWidget(productId: viewedProvider.getviewedProdItems.values.toList()[index].productId);
                 }),
           );
   }
