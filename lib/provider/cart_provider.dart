@@ -48,12 +48,20 @@ class CartProvider with ChangeNotifier {
     return total;
   }
 
+  int getQty() {
+    int total = 0;
+    _cartItems.forEach((key, value) {
+      total += value.quantity;
+    });
+    return total;
+  }
+
   void removeOneItem({required String productId}) {
     _cartItems.remove(productId);
     notifyListeners();
   }
 
-  void clearLocalCart({required String productId}) {
+  void clearLocalCart() {
     _cartItems.clear();
     notifyListeners();
   }

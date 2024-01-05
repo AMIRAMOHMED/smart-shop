@@ -1,9 +1,10 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_smart/models/product_model.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 
-import '../../consts/app_constants.dart';
 
 
 import '../../screens/inner_screens/product_details_screen.dart';
@@ -14,6 +15,7 @@ class LatestArrivelProductsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productsModel=Provider.of<ProductModel>(context);
     Size size = MediaQuery.of(context).size;
 
     return GestureDetector(
@@ -31,7 +33,7 @@ class LatestArrivelProductsWidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: FancyShimmerImage(
-                    imageUrl: AppConstants.productImageUrl,
+                    imageUrl: productsModel.productImage,
                     width: size.width * .28,
                     height: size.height * .12,
                   ),
@@ -45,14 +47,15 @@ class LatestArrivelProductsWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Title" * 10,
+                      productsModel.productTitle,
                       overflow: TextOverflow.ellipsis,
                     ),
                     FittedBox(
                       child: Row(
                         children: [
-                          const HeartButtonWidget(
-                            size: 18,
+                           HeartButtonWidget(
+                            size: 18, productId: productsModel.productId
+
                           ),
                           IconButton(
                             onPressed: () {},
@@ -64,9 +67,9 @@ class LatestArrivelProductsWidget extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const FittedBox(
+                     FittedBox(
                       child: SubtitleTextWidget(
-                        label: "165\$",
+                        label: "${productsModel.productPrice}\$",
                         fontSize: 20,
                         color: Colors.blue,
                       ),

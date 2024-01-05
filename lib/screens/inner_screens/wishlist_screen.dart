@@ -1,8 +1,12 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
 
+import '../../provider/wishlist_provider.dart';
 import '../../services/assest_manger.dart';
 
+import '../../services/my_app_methods.dart';
 import '../../widgets/empty_bag.dart';
 import '../../widgets/products/product_widget.dart';
 import '../../widgets/title_text_.dart';
@@ -10,10 +14,12 @@ import '../../widgets/title_text_.dart';
 class WishListScreen extends StatelessWidget {
   const WishListScreen({super.key});
   static const id = "WishListScreen";
-  final bool isEmpty = false;
+
   @override
   Widget build(BuildContext context) {
-    return isEmpty
+    final wishListProvider = Provider.of<WishListProvider>(context);
+
+    return wishListProvider.getwishItems.isEmpty
         ? Scaffold(
             body: EmptyBag(
             imagePath: AssetsManager.wishlistSvg,
@@ -24,19 +30,26 @@ class WishListScreen extends StatelessWidget {
           ))
         : Scaffold(
             appBar: AppBar(
-              title: const TitlesTextWidget(label: "WishList(5)", fontSize: 20),
+              title:  TitlesTextWidget(label: "WishList(${wishListProvider.getwishItems.length})", fontSize: 20),
               leading: Image.asset(AssetsManager.wishlistSvg),
-              actions: const [
-                Icon(
-                  Icons.delete,
+              actions:  [
+                IconButton(
+
+                  color: Colors.red, onPressed: () { MyAppMethods.showErrorOrWarningDialog(
+                    subTitle: "ClearCart",
+                    context: context,
+                    isError: false,
+                    fct: () {
+                      wishListProvider.clearWhisList();
+                    }); }, icon:const Icon(  IconlyLight.delete,) ,
                 )
               ],
             ),
             body: DynamicHeightGridView(
-                itemCount: 120,
+                itemCount: wishListProvider.getwishItems.length,
                 crossAxisCount: 2,
                 builder: (context, index) {
-                  return  const ProductWidget(productId: '',);
+                  return   ProductWidget(productId:wishListProvider.getwishItems.values.toList()[index].productId);
                 }),
           );
   }

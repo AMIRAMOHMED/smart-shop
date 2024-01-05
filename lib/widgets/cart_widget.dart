@@ -6,6 +6,7 @@ import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
 
 import '../models/cart_model.dart';
+import '../provider/cart_provider.dart';
 import '../provider/product_provider.dart';
 import 'bottom_sheet.dart';
 import 'products/heart_button.dart';
@@ -20,6 +21,7 @@ class CartWidget extends StatelessWidget {
     final cartModelProvider = Provider.of<CartModel>(context);
     final getCurrProduct =
         productProvider.findByProductID(cartModelProvider.productId);
+    final cartProvider = Provider.of<CartProvider>(context);
 
     return getCurrProduct == null
         ? const SizedBox.shrink()
@@ -55,13 +57,17 @@ class CartWidget extends StatelessWidget {
                               Column(
                                 children: [
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      cartProvider.removeOneItem(productId: getCurrProduct.productId);
+                                    },
                                     child: const Icon(
-                                      Icons.clear,
+                                      IconlyLight.delete,
                                       color: Colors.red,
                                     ),
                                   ),
-                                  const HeartButtonWidget(),
+                                   HeartButtonWidget(productId:getCurrProduct.productId,
+
+                                   ),
                                 ],
                               ),
                             ],
