@@ -89,6 +89,7 @@ class MyApp extends StatelessWidget {
                       const ForgetPassswordScreen(),
                   OrderScreen.id: (context) => const OrderScreen(),
                   SearchScreen.id: (context) => const SearchScreen(),
+                  RootScreen.id: (context) => const RootScreen(),
                 },
               );
             },

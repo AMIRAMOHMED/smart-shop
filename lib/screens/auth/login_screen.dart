@@ -1,11 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconly/iconly.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:shop_smart/root.dart';
 import 'package:shop_smart/screens/auth/register_screen.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
 
 import '../../consts/my_validators.dart';
+import '../../services/my_app_methods.dart';
 import '../../widgets/app_name_text.dart';
 import 'forgot_password_screen.dart';
 
@@ -25,6 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
   late final FocusNode _passwordlFoucsNode;
   late final _formKey = GlobalKey<FormState>();
   bool obscureText = true;
+  bool _isLoading = false;
+  final auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -47,7 +53,43 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _loginFct() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
-    if (isValid) {}
+
+    if (isValid) {
+      _formKey.currentState!.save();
+
+      try {
+        setState(() {
+          _isLoading = true;
+        });
+        await auth.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        Fluttertoast.showToast(
+          msg: "Login Successful",
+          toastLength: Toast.LENGTH_SHORT,
+          textColor: Colors.white,
+        );
+        if (!mounted) return;
+        Navigator.pushNamed(context, RootScreen.id);
+      } on FirebaseAuthException catch (error) {
+        await MyAppMethods.showErrorOrWarningDialog(
+          fct: () {},
+          subTitle: "An error has been occured ${error.message}",
+          context: context,
+        );
+      } catch (error) {
+        await MyAppMethods.showErrorOrWarningDialog(
+          context: context,
+          fct: () {},
+          subTitle: "An error has been occured $error",
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override

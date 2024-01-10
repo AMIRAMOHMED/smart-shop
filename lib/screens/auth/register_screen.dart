@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconly/iconly.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shop_smart/services/my_app_methods.dart';
 
 import '../../consts/my_validators.dart';
+import '../../root.dart';
 import '../../widgets/app_name_text.dart';
 import '../../widgets/auth/pick_image_widget.dart';
 import '../../widgets/subtitle_text.dart';
@@ -68,12 +70,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     if (isValid) {
       _formKey.currentState!.save();
-      if (_pickImage == null) {
-        MyAppMethods.showErrorOrWarningDialog(
-            context: context,
+      // if (_pickImage == null) {
+      //   MyAppMethods.showErrorOrWarningDialog(
+      //       context: context,
+      //
+      //       fct: () {}, subTitle: '"Make sure to pick up an image"');
+      // }
 
-            fct: () {}, subTitle: '"Make sure to pick up an image"');
-      }
       try {
         setState(() {
           _isLoading = true;
@@ -82,13 +85,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
-        // Fluttertoast.showToast(
-        //   msg: "An account has been created",
-        //   toastLength: Toast.LENGTH_SHORT,
-        //   textColor: Colors.white,
-        // );
+        Fluttertoast.showToast(
+          msg: "An account has been created",
+          toastLength: Toast.LENGTH_SHORT,
+          textColor: Colors.white,
+        );if(!mounted) return;
+
+        Navigator.pushNamed(context, RootScreen.id);
       } on FirebaseAuthException catch (error) {
-        await MyAppMethods.showErrorOrWarningDialog(
+        await  MyAppMethods.showErrorOrWarningDialog(
           fct: () {},
           subTitle: "An error has been occured ${error.message}",
           context: context,

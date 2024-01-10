@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
@@ -8,12 +9,21 @@ import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
 
 import '../provider/them_provider.dart';
+import '../services/my_app_methods.dart';
 import '../widgets/app_name_text.dart';
 import 'auth/login_screen.dart';
+import 'auth/register_screen.dart';
 import 'inner_screens/viewd_recently.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -147,21 +157,28 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () async {
-                          Navigator.pushNamed(
-                            context,
-                            LoginScreen.id,
-                          );
-
-                          // await MyAppMethods.showErrorOrWarningDialog(
-                          //     subTitle: "Are You Sure?",
-                          //     fct: () {},
-                          //     context: context,
-                          //     isError: false);
+                          if (user == null) {
+                            Navigator.pushNamed(
+                              context,
+                              LoginScreen.id,
+                            );
+                          } else {
+                            await MyAppMethods.showErrorOrWarningDialog(
+                              subTitle: "Are You Sure?",
+                              context: context,
+                              isError: false,
+                              fct: () async {
+                                await FirebaseAuth.instance.signOut();
+                                if (!mounted) return;
+                                Navigator.pushNamed(context, RegisterScreen.id);
+                              },
+                            );
+                          }
                         },
-                        icon: const Icon(
-                          IconlyLight.login,
-                        ),
-                        label: const Text("Login")),
+                        icon: Icon((user == null
+                            ? IconlyLight.login
+                            : IconlyLight.logout)),
+                        label: Text(user == null ? "Login" : " LogOut ")),
                   )
                 ],
               )

@@ -9,6 +9,7 @@ import 'package:shop_smart/screens/search_screen.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
+  static const id = "RootScreen";
 
   @override
   State<RootScreen> createState() => _RootScreenState();
