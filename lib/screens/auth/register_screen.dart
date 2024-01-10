@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,6 +31,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late final _formKey = GlobalKey<FormState>();
   bool obscureText = true;
   XFile? _pickImage;
+  bool _isLoading = false;
+  final auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -62,7 +65,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<void> _registerFct() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
-    if (isValid) {}
+
+    if (isValid) {
+      _formKey.currentState!.save();
+      if (_pickImage == null) {
+        MyAppMethods.showErrorOrWarningDialog(
+            context: context,
+
+            fct: () {}, subTitle: '"Make sure to pick up an image"');
+      }
+      try {
+        setState(() {
+          _isLoading = true;
+        });
+        await auth.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        // Fluttertoast.showToast(
+        //   msg: "An account has been created",
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   textColor: Colors.white,
+        // );
+      } on FirebaseAuthException catch (error) {
+        await MyAppMethods.showErrorOrWarningDialog(
+          fct: () {},
+          subTitle: "An error has been occured ${error.message}",
+          context: context,
+        );
+      } catch (error) {
+        await MyAppMethods.showErrorOrWarningDialog(
+          context: context,
+          fct: () {},
+          subTitle: "An error has been occured $error",
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   Future<void> localImagePicker() async {
@@ -245,8 +287,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         validator: (value) {
                           return MyValidators.repeatPasswordValidator(
-                              value: value,
-                              password: _passwordController.text);
+                              value: value, password: _passwordController.text);
                         },
                         onFieldSubmitted: (value) {
                           _registerFct();

@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_smart/firebase_options.dart';
 import 'package:shop_smart/provider/cart_provider.dart';
 import 'package:shop_smart/provider/product_provider.dart';
 import 'package:shop_smart/provider/them_provider.dart';
@@ -26,46 +28,73 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => ThemeProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ProductProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => CartProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => WishListProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ViewedProductProvider(),
-        ),
-      ],
-      child: Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
-        return MaterialApp(
-          theme: Styles.themeData(
-              isDarkTheme: themeProvider.getIsDarkTheme, context: context),
-          debugShowCheckedModeBanner: false,
-          title: "ShopSmart",
-          // home: const RootScreen(),
-          home: const RootScreen(),
-          routes: {
-            ProductDetails.id: (context) => const ProductDetails(),
-            WishListScreen.id: (context) => const WishListScreen(),
-            ViewedRecentlyPage.id: (context) => const ViewedRecentlyPage(),
-            LoginScreen.id: (context) => const LoginScreen(),
-            RegisterScreen.id: (context) => const RegisterScreen(),
-            ForgetPassswordScreen.id: (context) =>
-                const ForgetPassswordScreen(),
-            OrderScreen.id: (context) => const OrderScreen(),
-            SearchScreen.id: (context) =>
-            const SearchScreen(),
-          },
+    return FutureBuilder(
+      future: Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child:
+                    SelectableText("An error has occurred ${snapshot.error}"),
+              ),
+            ),
+          );
+        }
+
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (_) => ThemeProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => ProductProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => CartProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => WishListProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => ViewedProductProvider(),
+            ),
+          ],
+          child: Consumer<ThemeProvider>(
+            builder: (context, themeProvider, child) {
+              return MaterialApp(
+                title: 'Shop Smart AR',
+                theme: Styles.themeData(
+                  isDarkTheme: themeProvider.getIsDarkTheme,
+                  context: context,
+                ),
+                debugShowCheckedModeBanner: false,
+                home: const RootScreen(),
+                routes: {
+                  ProductDetails.id: (context) => const ProductDetails(),
+                  WishListScreen.id: (context) => const WishListScreen(),
+                  ViewedRecentlyPage.id: (context) =>
+                      const ViewedRecentlyPage(),
+                  LoginScreen.id: (context) => const LoginScreen(),
+                  RegisterScreen.id: (context) => const RegisterScreen(),
+                  ForgetPassswordScreen.id: (context) =>
+                      const ForgetPassswordScreen(),
+                  OrderScreen.id: (context) => const OrderScreen(),
+                  SearchScreen.id: (context) => const SearchScreen(),
+                },
+              );
+            },
+          ),
         );
-      }),
+      },
     );
   }
 }

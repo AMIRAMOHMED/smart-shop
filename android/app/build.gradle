@@ -1,7 +1,7 @@
 plugins {
     id "com.android.application"
     id "kotlin-android"
-    id 'com.google.gms.google-services'
+
     id "dev.flutter.flutter-gradle-plugin"
 }
 
@@ -43,7 +43,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.shop_smart"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -60,10 +60,9 @@ android {
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'com.android.support:multidex:1.0.3'
 
-    implementation platform('com.google.firebase:firebase-bom:32.7.0')
 }
 
 flutter {
