@@ -5,6 +5,7 @@ import 'package:shop_smart/firebase_options.dart';
 import 'package:shop_smart/provider/cart_provider.dart';
 import 'package:shop_smart/provider/product_provider.dart';
 import 'package:shop_smart/provider/them_provider.dart';
+import 'package:shop_smart/provider/user_provider.dart';
 import 'package:shop_smart/provider/viewed_provider.dart';
 import 'package:shop_smart/provider/wishlist_provider.dart';
 import 'package:shop_smart/root.dart';
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+      future: Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const MaterialApp(
@@ -66,6 +68,9 @@ class MyApp extends StatelessWidget {
             ),
             ChangeNotifierProvider(
               create: (_) => ViewedProductProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => UserProvider(),
             ),
           ],
           child: Consumer<ThemeProvider>(
