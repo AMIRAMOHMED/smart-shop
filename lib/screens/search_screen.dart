@@ -53,62 +53,84 @@ class _SearchScreenState extends State<SearchScreen> {
               TitlesTextWidget(label: passedCategory ?? "Search", fontSize: 25),
           leading: Image.asset(AssetsManager.shoppingCart),
         ),
-        body: Center(
-          child: productList.isEmpty
-              ? const TitlesTextWidget(label: "NoProductFound", fontSize: 40)
-              : Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: Column(
-                    children: [
-                      TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            productListSearch = productProvider.searchQuery(
-                                searchText: searchTextController.text,
-                                passedList: productList);
-                          });
-                        },
-                        controller: searchTextController,
-                        decoration: InputDecoration(
-                            filled: true,
-                            suffixIcon: InkWell(
-                              child: const Icon(Icons.clear),
-                              onTap: () {
-                                searchTextController.clear();
-                                FocusScope.of(context).unfocus();
-                              },
-                            ),
-                            prefixIcon: const Icon(Icons.search)),
+        body:
+            Center(
+              child: productList.isEmpty
+                  ? const TitlesTextWidget(label: "NoProductFound", fontSize: 40)
+                  :
+            StreamBuilder<List<ProductModel>>(
+                stream: productProvider.fetchProductsStream(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: TitlesTextWidget(
+                        label: snapshot.error.toString(),
+                        fontSize: 25,
                       ),
-                      const SizedBox(
-                        height: 20,
+                    );
+                  } else if (snapshot.hasData == null) {
+                    return const Center(
+                      child: TitlesTextWidget(
+                        label: "No Product has been added",
+                        fontSize: 25,
                       ),
-                      if (searchTextController.text.isNotEmpty &&
-                          productListSearch.isEmpty) ...[
-                        const Center(
-                            child: TitlesTextWidget(
-                                label: "No result found", fontSize: 40))
-                      ],
-                      Expanded(
-                        child: DynamicHeightGridView(
-                          itemCount: searchTextController.text.isNotEmpty
-                              ? productListSearch.length
-                              : productList.length,
-                          builder: ((context, index) {
-                            return ProductWidget(
-                              productId: searchTextController.text.isNotEmpty
-                                  ? productListSearch[index].productId
-                                  : productList[index].productId,
-                            );
-                          }),
-                          crossAxisCount: 2,
+                    );
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.all(25.0),
+                    child: Column(
+                      children: [
+                        TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              productListSearch = productProvider.searchQuery(
+                                  searchText: searchTextController.text,
+                                  passedList: productList);
+                            });
+                          },
+                          controller: searchTextController,
+                          decoration: InputDecoration(
+                              filled: true,
+                              suffixIcon: InkWell(
+                                child: const Icon(Icons.clear),
+                                onTap: () {
+                                  searchTextController.clear();
+                                  FocusScope.of(context).unfocus();
+                                },
+                              ),
+                              prefixIcon: const Icon(Icons.search)),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        if (searchTextController.text.isNotEmpty &&
+                            productListSearch.isEmpty) ...[
+                          const Center(
+                              child: TitlesTextWidget(
+                                  label: "No result found", fontSize: 40))
+                        ],
+                        Expanded(
+                          child: DynamicHeightGridView(
+                            itemCount: searchTextController.text.isNotEmpty
+                                ? productListSearch.length
+                                : productList.length,
+                            builder: ((context, index) {
+                              return ProductWidget(
+                                productId: searchTextController.text.isNotEmpty
+                                    ? productListSearch[index].productId
+                                    : productList[index].productId,
+                              );
+                            }),
+                            crossAxisCount: 2,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
       ),
-    );
+    ));
   }
 }

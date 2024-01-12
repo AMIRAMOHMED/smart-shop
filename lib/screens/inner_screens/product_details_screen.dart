@@ -6,6 +6,7 @@ import 'package:shop_smart/widgets/title_text_.dart';
 
 import '../../provider/cart_provider.dart';
 import '../../provider/product_provider.dart';
+import '../../services/my_app_methods.dart';
 import '../../widgets/app_name_text.dart';
 import '../../widgets/products/heart_button.dart';
 
@@ -87,13 +88,26 @@ class ProductDetails extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 if (cartProvider.isProductInCart(
                                     productId: getCurrProduct.productId)) {
                                   return;
                                 }
-                                cartProvider.addProductToCart(
-                                    productId: getCurrProduct.productId);
+
+                                // cartProvider.addProductToCart(
+                                //     productId: getCurrProduct.productId);
+
+                                try {
+                                  await cartProvider.addToCartFirebase(
+                                      productId: getCurrProduct.productId,
+                                      qty: 1,
+                                      context: context);
+                                } catch (error) {
+                                  MyAppMethods.showErrorOrWarningDialog(
+                                      subTitle: error.toString(),
+                                      context: context,
+                                      fct: () {});
+                                }
                               },
                               icon: Icon(
                                 cartProvider.isProductInCart(

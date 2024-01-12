@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class ProductModel with ChangeNotifier {
@@ -19,5 +20,15 @@ class ProductModel with ChangeNotifier {
       required this.productImage,
       required this.productQuantity});
 
-
+  factory ProductModel.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data() as Map<String, dynamic>;
+    return ProductModel(
+        productTitle: data["productTitle"],
+        productPrice: data["productPrice"],
+        productId: data["productId"],
+        productCategory: data["productCategory"],
+        productDescription: data["productDescription"],
+        productImage: data["productImage"],
+        productQuantity: data["productQuantity"]);
+  }
 }

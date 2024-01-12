@@ -4,7 +4,6 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_smart/models/user_model.dart';
 import 'package:shop_smart/provider/user_provider.dart';
-import 'package:shop_smart/screens/inner_screens/loading_manger.dart';
 import 'package:shop_smart/screens/inner_screens/order_screen/order_screen.dart';
 import 'package:shop_smart/screens/inner_screens/wishlist_screen.dart';
 import 'package:shop_smart/services/assest_manger.dart';
@@ -15,6 +14,7 @@ import '../provider/them_provider.dart';
 import '../services/my_app_methods.dart';
 import '../widgets/app_name_text.dart';
 import 'auth/login_screen.dart';
+import 'inner_screens/loading_manger.dart';
 import 'inner_screens/viewd_recently.dart';
 
 class ProfileScreen extends StatefulWidget {

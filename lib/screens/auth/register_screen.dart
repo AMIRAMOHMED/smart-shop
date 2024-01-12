@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconly/iconly.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shop_smart/screens/inner_screens/loading_manger.dart';
 import 'package:shop_smart/services/my_app_methods.dart';
 import '../../consts/my_validators.dart';
 import '../../root.dart';
@@ -15,6 +14,7 @@ import '../../widgets/app_name_text.dart';
 import '../../widgets/auth/pick_image_widget.dart';
 import '../../widgets/subtitle_text.dart';
 import '../../widgets/title_text_.dart';
+import '../inner_screens/loading_manger.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const id = '/RegisterScreen';

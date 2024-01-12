@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_smart/services/my_app_methods.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
 
@@ -86,14 +87,24 @@ class _ProductWidgetState extends State<ProductWidget> {
                         color: Colors.black12,
                         child: InkWell(
                           splashColor: Colors.red,
-                          onTap: () {
+                          onTap: () async {
                             if (cartProvider.isProductInCart(
                                 productId: getCurrProduct.productId)) {
                               return;
                             }
-                            {
-                              cartProvider.addProductToCart(
-                                  productId: getCurrProduct.productId);
+                            // cartProvider.addProductToCart(
+                            //     productId: getCurrProduct.productId);
+
+                            try {
+                              await cartProvider.addToCartFirebase(
+                                  productId: getCurrProduct.productId,
+                                  qty: 1,
+                                  context: context);
+                            } catch (error) {
+                              MyAppMethods.showErrorOrWarningDialog(
+                                  subTitle: error.toString(),
+                                  context: context,
+                                  fct: () {});
                             }
                           },
                           child: Padding(

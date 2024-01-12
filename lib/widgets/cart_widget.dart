@@ -57,17 +57,22 @@ class CartWidget extends StatelessWidget {
                               Column(
                                 children: [
                                   InkWell(
-                                    onTap: () {
-                                      cartProvider.removeOneItem(productId: getCurrProduct.productId);
+                                    onTap: () async{await
+                                      cartProvider.removeCartItemFromFirebase(cartID: cartModelProvider.cartId,
+                                          productId: cartModelProvider.productId,
+                                          qty: cartModelProvider.quantity);
+                                      // cartProvider.removeOneItem(
+                                      //     productId: getCurrProduct.productId);
+
                                     },
                                     child: const Icon(
                                       IconlyLight.delete,
                                       color: Colors.red,
                                     ),
                                   ),
-                                   HeartButtonWidget(productId:getCurrProduct.productId,
-
-                                   ),
+                                  HeartButtonWidget(
+                                    productId: getCurrProduct.productId,
+                                  ),
                                 ],
                               ),
                             ],

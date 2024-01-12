@@ -7,8 +7,10 @@ import 'package:shop_smart/widgets/subtitle_text.dart';
 
 
 
+import '../../provider/cart_provider.dart';
 import '../../provider/viewed_provider.dart';
 import '../../screens/inner_screens/product_details_screen.dart';
+import '../../services/my_app_methods.dart';
 import 'heart_button.dart';
 
 class LatestArrivelProductsWidget extends StatelessWidget {
@@ -18,6 +20,7 @@ class LatestArrivelProductsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final productsModel=Provider.of<ProductModel>(context);
     final viewedProvider=Provider.of<ViewedProductProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
 
     Size size = MediaQuery.of(context).size;
 
@@ -67,8 +70,26 @@ class LatestArrivelProductsWidget extends StatelessWidget {
 
                           ),
                           IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
+                            onPressed: ()async {
+                              if (cartProvider.isProductInCart(
+                                  productId: productsModel.productId)) {
+                                return;
+                              }
+                              // cartProvider.addProductToCart(
+                              //     productId: getCurrProduct.productId);
+
+                              try {
+                                await cartProvider.addToCartFirebase(
+                                    productId: productsModel.productId,
+                                    qty: 1,
+                                    context: context);
+                              } catch (error) {
+                                MyAppMethods.showErrorOrWarningDialog(
+                                    subTitle: error.toString(),
+                                    context: context,
+                                    fct: () {});
+                              }
+                            }, icon: const Icon(
                               Ionicons.cart_sharp,
                               size: 18,
                             ),
