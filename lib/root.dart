@@ -5,6 +5,7 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_smart/provider/cart_provider.dart';
 import 'package:shop_smart/provider/product_provider.dart';
+import 'package:shop_smart/provider/wishlist_provider.dart';
 import 'package:shop_smart/screens/cart_screen.dart';
 import 'package:shop_smart/screens/home_screen.dart';
 import 'package:shop_smart/screens/profile_screen.dart';
@@ -42,12 +43,14 @@ class _RootScreenState extends State<RootScreen> {
   Future<void> fetchFCT() async {
     final productProvider =
         Provider.of<ProductProvider>(context, listen: false);
-    final cartProvider =
-    Provider.of<CartProvider>(context, listen: false);
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    final wishListtProvider =
+        Provider.of<WishListProvider>(context, listen: false);
 
     try {
       Future.wait({productProvider.fetchProducts()});
-      Future.wait({cartProvider.fetchCart()});
+      Future.wait(
+          {cartProvider.fetchCart(), wishListtProvider.fetchWishList()});
     } catch (error) {
       log(error.toString());
     } finally {
