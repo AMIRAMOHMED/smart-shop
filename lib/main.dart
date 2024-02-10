@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_smart/firebase_options.dart';
 import 'package:shop_smart/provider/cart_provider.dart';
+import 'package:shop_smart/provider/orders_provider.dart';
 import 'package:shop_smart/provider/product_provider.dart';
 import 'package:shop_smart/provider/them_provider.dart';
 import 'package:shop_smart/provider/user_provider.dart';
@@ -74,6 +75,9 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(
               create: (_) => UserProvider(),
             ),
+            ChangeNotifierProvider(
+              create: (_) => OrderProvider(),
+            ),
           ],
           child: Consumer<ThemeProvider>(
             builder: (context, themeProvider, child) {
@@ -94,7 +98,7 @@ class MyApp extends StatelessWidget {
                   RegisterScreen.id: (context) => const RegisterScreen(),
                   ForgetPassswordScreen.id: (context) =>
                       const ForgetPassswordScreen(),
-                  OrderScreen.id: (context) => const OrderScreen(),
+                  OrdersScreenFree.id: (context) => const OrdersScreenFree(),
                   SearchScreen.id: (context) => const SearchScreen(),
                   RootScreen.id: (context) => const RootScreen(),
                 },

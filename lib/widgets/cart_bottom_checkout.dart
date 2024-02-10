@@ -7,8 +7,8 @@ import '../provider/cart_provider.dart';
 import '../provider/product_provider.dart';
 
 class CartButtomCheckOut extends StatelessWidget {
-  const CartButtomCheckOut({super.key});
-
+  const CartButtomCheckOut({super.key, required this.function});
+final Function function;
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
@@ -44,7 +44,7 @@ class CartButtomCheckOut extends StatelessWidget {
                     ],
                   ),
                 ),
-                ElevatedButton(onPressed: () {}, child: const Text("CheckOut"))
+                ElevatedButton(onPressed: () async{await function();}, child: const Text("CheckOut"))
               ],
             ),
           )),

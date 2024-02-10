@@ -133,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     CustomListTile(
                       text: "All orders ",
                       function: () async {
-                        await Navigator.pushNamed(context, OrderScreen.id);
+                        await Navigator.pushNamed(context, OrdersScreenFree.id);
                       },
                       imagePath: AssetsManager.orderSvg,
                     ),
