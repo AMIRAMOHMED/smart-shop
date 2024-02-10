@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:762812636425:android:e71e54acb1f75e989247d8",
+        "mobilesdk_app_id": "1:762812636425:android:cb26bb697f66d6af9247d8",
         "android_client_info": {
-          "package_name": "com.example.shop_smart"
+          "package_name": "com.example.admain_panel"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "762812636425-r3rdulvou52qtm3jdp2m878dcuhavner.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDgGLA5QXWkOpFsQ_3I7Ec1_bBHO5cOi0k"
@@ -20,7 +25,55 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762812636425-r3rdulvou52qtm3jdp2m878dcuhavner.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "762812636425-4kkgnggknfq04eardlisp3amhtnj574m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shopSmart.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762812636425:android:e71e54acb1f75e989247d8",
+        "android_client_info": {
+          "package_name": "com.example.shop_smart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762812636425-r3rdulvou52qtm3jdp2m878dcuhavner.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgGLA5QXWkOpFsQ_3I7Ec1_bBHO5cOi0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762812636425-r3rdulvou52qtm3jdp2m878dcuhavner.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "762812636425-4kkgnggknfq04eardlisp3amhtnj574m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shopSmart.RunnerTests"
+              }
+            }
+          ]
         }
       }
     }

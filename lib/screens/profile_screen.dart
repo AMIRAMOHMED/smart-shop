@@ -140,7 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     CustomListTile(
                       text: "WishList",
                       function: () async {
-                        await Navigator.pushNamed(context, WishListScreen.id);
+                        await Navigator.pushNamed(context, WishlistScreen.id);
                       },
                       imagePath: AssetsManager.wishlistSvg,
                     ),

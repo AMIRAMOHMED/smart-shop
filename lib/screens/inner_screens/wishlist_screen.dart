@@ -1,56 +1,70 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_smart/provider/wishlist_provider.dart';
+import 'package:shop_smart/services/assest_manger.dart';
+import 'package:shop_smart/services/my_app_methods.dart';
+import 'package:shop_smart/widgets/empty_bag.dart';
+import 'package:shop_smart/widgets/title_text_.dart';
 
-import '../../provider/wishlist_provider.dart';
-import '../../services/assest_manger.dart';
-
-import '../../services/my_app_methods.dart';
-import '../../widgets/empty_bag.dart';
 import '../../widgets/products/product_widget.dart';
-import '../../widgets/title_text_.dart';
 
-class WishListScreen extends StatelessWidget {
-  const WishListScreen({super.key});
-  static const id = "WishListScreen";
+class WishlistScreen extends StatelessWidget {
+  static const id = "WishlistScreen";
+  const WishlistScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final wishListProvider = Provider.of<WishListProvider>(context);
-
-    return wishListProvider.getwishItems.isEmpty
+    final wishlistProvider = Provider.of<WishListProvider>(context);
+    return wishlistProvider.getWishlistItems.isEmpty
         ? Scaffold(
             body: EmptyBag(
-            imagePath: AssetsManager.wishlistSvg,
-            title: "Your Cart is empty ",
-            subTitle:
-                "Looks Like youغيرها بعيد  didnot add anything \n go ahead and start shopping now ",
-            buttonText: "Shop Now",
-          ))
+              imagePath: AssetsManager.bagWish,
+              title: "Your wishlist is empty",
+              subTitle:
+                  'Looks like you didn\'t add anything yet to your cart \ngo ahead and start shopping now',
+              buttonText: "Shop Now",
+            ),
+          )
         : Scaffold(
             appBar: AppBar(
-              title:  TitlesTextWidget(label: "WishList(${wishListProvider.getwishItems.length})", fontSize: 20),
-              leading: Image.asset(AssetsManager.wishlistSvg),
-              actions:  [
+              title: TitlesTextWidget(
+                  label:
+                      "Wishlist (${wishlistProvider.getWishlistItems.length})", fontSize: 20,),
+              leading: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(AssetsManager.shoppingCart),
+              ),
+              actions: [
                 IconButton(
-
-                  color: Colors.red, onPressed: () { MyAppMethods.showErrorOrWarningDialog(
-                    subTitle: "ClearCart",
-                    context: context,
-                    isError: false,
-                    fct: () {
-                      wishListProvider.clearWhisList();
-                    }); }, icon:const Icon(  IconlyLight.delete,) ,
-                )
+                  onPressed: () {
+                    MyAppMethods.showErrorOrWarningDialog(
+                        isError: false,
+                        context: context,
+                        subTitle: "Remove items",
+                        fct: () async {
+                          await wishlistProvider.clearWishlistFromFirebase();
+                          wishlistProvider.clearLocalWishlist();
+                        });
+                  },
+                  icon: const Icon(
+                    Icons.delete_forever_rounded,
+                    color: Colors.red,
+                  ),
+                ),
               ],
             ),
             body: DynamicHeightGridView(
-                itemCount: wishListProvider.getwishItems.length,
-                crossAxisCount: 2,
-                builder: (context, index) {
-                  return   ProductWidget(productId:wishListProvider.getwishItems.values.toList()[index].productId);
-                }),
+              itemCount: wishlistProvider.getWishlistItems.length,
+              builder: ((context, index) {
+                return ProductWidget(
+                  productId: wishlistProvider.getWishlistItems.values
+                      .toList()[index]
+                      .productId,
+                );
+              }),
+              crossAxisCount: 2,
+            ),
           );
   }
 }

@@ -1,16 +1,18 @@
+
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_smart/provider/wishlist_provider.dart';
 import 'package:shop_smart/services/my_app_methods.dart';
 
-class HeartButtonWidget extends StatefulWidget {
-  const HeartButtonWidget(
-      {super.key,
-      this.size = 22,
-      this.color = Colors.transparent,
-      required this.productId});
 
+class HeartButtonWidget extends StatefulWidget {
+  const HeartButtonWidget({
+    super.key,
+    this.size = 22,
+    this.color = Colors.transparent,
+    required this.productId,
+  });
   final double size;
   final Color color;
   final String productId;
@@ -19,54 +21,63 @@ class HeartButtonWidget extends StatefulWidget {
   State<HeartButtonWidget> createState() => _HeartButtonWidgetState();
 }
 
-bool isLoading = false;
-
 class _HeartButtonWidgetState extends State<HeartButtonWidget> {
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    final wishListProvider = Provider.of<WishListProvider>(context);
+    final wishlistProvider = Provider.of<WishListProvider>(context);
     return Container(
-      decoration: BoxDecoration(color: widget.color, shape: BoxShape.circle),
-      child: InkWell(
-        onTap: () async {
-          // wishListProvider.addOrRemoveFromWishList(productId: productId);
-          // await wishListProvider.fetchWishList();}
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: widget.color,
+      ),
+      child: IconButton(
+        style: IconButton.styleFrom(
+          shape: const CircleBorder(),
+        ),
+        onPressed: () async {
+          // wishlistProvider.addOrRemoveFromWishlist(productId: widget.productId);
+          // log("wishlist Map is: ${wishlistProvider.getWishlistItems} ");
           setState(() {
             isLoading = true;
           });
           try {
-            if (wishListProvider.getwishItems.containsKey(widget.productId)) {
-              wishListProvider.removeWishtemFromFirebase(
-                  wishListID:
-                      wishListProvider.getwishItems[widget.productId]!.id,
-                  productId: widget.productId);
+            if (wishlistProvider.getWishlistItems
+                .containsKey(widget.productId)) {
+              wishlistProvider.removeWishlistItemFromFirebase(
+                wishlistId:
+                    wishlistProvider.getWishlistItems[widget.productId]!.id,
+                productId: widget.productId, 
+              );
             } else {
-              wishListProvider.addToWishListFirebase(
+              wishlistProvider.addToWishlistFirebase(
                   productId: widget.productId, context: context);
             }
-            await wishListProvider.fetchWishList();
+            await wishlistProvider.fetchWishlist();
           } catch (e) {
             MyAppMethods.showErrorOrWarningDialog(
-                subTitle: e.toString(), context: context, fct: (f) {});
+              context: context,
+              fct: () {}, subTitle: e.toString(),
+            );
           } finally {
             setState(() {
               isLoading = false;
             });
           }
         },
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Icon(
-            wishListProvider.isProductInWishList(productId: widget.productId)
-                ? IconlyBold.heart
-                : IconlyLight.heart,
-            size: widget.size,
-            color: wishListProvider.isProductInWishList(
-                    productId: widget.productId)
-                ? Colors.red
-                : Colors.grey,
-          ),
-        ),
+        icon: isLoading
+            ? const CircularProgressIndicator()
+            : Icon(
+                wishlistProvider.isProductInWishlist(
+                        productId: widget.productId)
+                    ? IconlyBold.heart
+                    : IconlyLight.heart,
+                size: widget.size,
+                color: wishlistProvider.isProductInWishlist(
+                        productId: widget.productId)
+                    ? Colors.red
+                    : Colors.grey,
+              ),
       ),
     );
   }

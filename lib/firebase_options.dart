@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '762812636425',
     projectId: 'shopsmart-32525',
     storageBucket: 'shopsmart-32525.appspot.com',
+    iosClientId: '762812636425-qhshs34v8a36f6gc506pshjcgslneijb.apps.googleusercontent.com',
     iosBundleId: 'com.example.shopSmart',
   );
 
@@ -76,6 +77,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '762812636425',
     projectId: 'shopsmart-32525',
     storageBucket: 'shopsmart-32525.appspot.com',
+    iosClientId: '762812636425-4kkgnggknfq04eardlisp3amhtnj574m.apps.googleusercontent.com',
     iosBundleId: 'com.example.shopSmart.RunnerTests',
   );
 }

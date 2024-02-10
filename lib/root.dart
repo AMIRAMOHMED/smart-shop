@@ -50,7 +50,7 @@ class _RootScreenState extends State<RootScreen> {
     try {
       Future.wait({productProvider.fetchProducts()});
       Future.wait(
-          {cartProvider.fetchCart(), wishListtProvider.fetchWishList()});
+          {cartProvider.fetchCart(), wishListtProvider.fetchWishlist()});
     } catch (error) {
       log(error.toString());
     } finally {
