@@ -4,13 +4,11 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
-
 import '../models/cart_model.dart';
 import '../provider/cart_provider.dart';
 import '../provider/product_provider.dart';
 import 'bottom_sheet.dart';
 import 'products/heart_button.dart';
-
 class CartWidget extends StatelessWidget {
   const CartWidget({super.key});
 

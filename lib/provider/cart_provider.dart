@@ -6,8 +6,8 @@ import 'package:shop_smart/models/product_model.dart';
 import 'package:shop_smart/provider/product_provider.dart';
 import 'package:shop_smart/services/my_app_methods.dart';
 import 'package:uuid/uuid.dart';
-
 import '../models/cart_model.dart';
+
 
 class CartProvider with ChangeNotifier {
   final Map<String, CartModel> _cartItems = {};

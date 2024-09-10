@@ -1,5 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
@@ -112,8 +113,8 @@ class ProductDetails extends StatelessWidget {
                               icon: Icon(
                                 cartProvider.isProductInCart(
                                         productId: getCurrProduct.productId)
-                                    ? Icons.check
-                                    : Icons.add_shopping_cart_rounded,
+                                    ? Ionicons.checkbox
+                                    : Ionicons.cart_sharp,
                               ),
                               label: Text(
                                 cartProvider.isProductInCart(

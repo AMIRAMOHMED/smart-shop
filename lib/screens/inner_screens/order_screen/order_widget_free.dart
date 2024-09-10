@@ -1,5 +1,8 @@
+import 'dart:js_interop_unsafe';
+
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:shop_smart/models/order.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
@@ -47,7 +50,7 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
                       IconButton(
                           onPressed: () {},
                           icon: const Icon(
-                            Icons.clear,
+                            Ionicons.close,
                             color: Colors.red,
                             size: 22,
                           )),

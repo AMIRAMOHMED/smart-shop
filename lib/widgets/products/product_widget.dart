@@ -112,7 +112,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                             child: Icon(cartProvider.isProductInCart(
                                     productId: getCurrProduct.productId)
                                 ? Ionicons.checkbox
-                                : Ionicons.cart),
+                                : Ionicons.checkbox_outline),
                           ),
                         ),
                       ),

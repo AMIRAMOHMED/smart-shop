@@ -1,5 +1,7 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_smart/models/product_model.dart';
 import 'package:shop_smart/widgets/title_text_.dart';
@@ -94,13 +96,13 @@ class _SearchScreenState extends State<SearchScreen> {
                           decoration: InputDecoration(
                               filled: true,
                               suffixIcon: InkWell(
-                                child: const Icon(Icons.clear),
+                                child: const Icon(   IconlyLight.delete),
                                 onTap: () {
                                   searchTextController.clear();
                                   FocusScope.of(context).unfocus();
                                 },
                               ),
-                              prefixIcon: const Icon(Icons.search)),
+                              prefixIcon: const Icon(IconlyLight.search)),
                         ),
                         const SizedBox(
                           height: 20,
