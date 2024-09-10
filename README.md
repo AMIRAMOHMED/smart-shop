@@ -1,4 +1,4 @@
-# hopSmart 🛒📱
+# ShopSmart 🛒📱
 Welcome to ShopSmart – Your Personal Shopping Assistant! This e-commerce app brings the world of shopping to your fingertips, making it smooth and enjoyable to find what you need.
 
 ## Overview:
