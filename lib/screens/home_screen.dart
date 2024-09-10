@@ -1,3 +1,4 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,28 +29,28 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // SizedBox(
-          //   height: size.height * .25,
-          //   child: ClipRRect(
-          //     borderRadius: BorderRadius.circular(30),
-          //     child: Swiper(
-          //       itemBuilder: (BuildContext context, int index) {
-          //         return Image.asset(
-          //           AppConstants.banersImages[index],
-          //           fit: BoxFit.fill,
-          //         );
-          //       },
-          //       itemCount: AppConstants.banersImages.length,
-          //       viewportFraction: .8,
-          //       scale: .9,
-          //       autoplay: true,
-          //       pagination: const SwiperPagination(
-          //           alignment: Alignment.bottomCenter,
-          //           builder: DotSwiperPaginationBuilder(
-          //               color: Colors.white, activeColor: Colors.black54)),
-          //     ),
-          //   ),
-          // ),
+          SizedBox(
+            height: size.height * .25,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: Swiper(
+                itemBuilder: (BuildContext context, int index) {
+                  return Image.asset(
+                    AppConstants.banersImages[index],
+                    fit: BoxFit.fill,
+                  );
+                },
+                itemCount: AppConstants.banersImages.length,
+                viewportFraction: .8,
+                scale: .9,
+                autoplay: true,
+                pagination: const SwiperPagination(
+                    alignment: Alignment.bottomCenter,
+                    builder: DotSwiperPaginationBuilder(
+                        color: Colors.white, activeColor: Colors.black54)),
+              ),
+            ),
+          ),
           const SizedBox(height: 18),
           Visibility(
               visible: productProvider.getProducts.isNotEmpty,
